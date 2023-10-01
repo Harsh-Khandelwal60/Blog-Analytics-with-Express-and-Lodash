@@ -53,5 +53,19 @@ export const fetchData = (req, res, next) => {
 };
 
 
+export const searchData = async (req, res) => {
+    const {query} = req.query;
+    console.log(query);
 
+    try {
+        const title = new RegExp(query, 'i');
+        console.log(title);
+      
+        const blogs = await Blog.find( { title: title } );
+
+        res.json({data: blogs});
+    } catch (error) {
+        console.log(error);
+    }
+}
 

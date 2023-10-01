@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.get('/blog-stats',fetchData);
-// router.get('/blog-search',searchData);
+router.get('/blog-search',searchData);
 
 
 export default router;
