@@ -1,11 +1,12 @@
 import express, { Router } from 'express';
-import { middleware1 } from '../Controllers/index.js';
+import { fetchData , searchData } from '../Controllers/index.js';
 
 
 const router = express.Router();
 
 
-router.get('/blog-stats',middleware1);
+router.get('/blog-stats',fetchData);
+// router.get('/blog-search',searchData);
 
 
 export default router;
