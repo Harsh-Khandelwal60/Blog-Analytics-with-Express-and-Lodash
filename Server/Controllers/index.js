@@ -8,10 +8,13 @@ import _ from 'lodash';
 
 
 const memoizedFetchData = _.memoize(async (req, res, next) => {
+
+    
+    const header = req?.headers['x-hasura-admin-secret'];
     return new Promise((resolve, reject) => {
         curl.get('https://intent-kit-16.hasura.app/api/rest/blogs/', {
             headers: {
-                'x-hasura-admin-secret': '32qR4KmXOIpsGPQKMqEJHGJS27G5s7HdSKO3gdtQd2kv5e852SiYwWNfxkZOBuQ6'
+                'x-hasura-admin-secret': `${header}`,
             }
         }, (error, response, body) => {
             if (error) {
@@ -62,12 +65,13 @@ export const fetchData = async (req, res, next) => {
 
 
 
-export const searchData = async (req, res) => {
-   const {blogs} = await memoizedFetchData();
+export const searchData = async (req, res , next) => {
+   const {blogs} = await memoizedFetchData(req,res , next);
    const { query } = req.query;
-   console.log(query);
+  
     try {
-        const blog = blogs.filter((blog) => {
+       
+        const blog = blogs?.filter((blog) => {
             return blog.title.toLowerCase().includes(query.toLowerCase());
         }) 
         res.status(200).json({blog:blog});
